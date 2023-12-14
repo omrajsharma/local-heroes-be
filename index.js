@@ -5,6 +5,7 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const healthRoutes = require('./routes/HealthRoutes')
 const authRoutes = require('./routes/AuthRoutes')
+const providerRoutes = require('./routes/ProviderRoutes')
 
 /**
  * APP
@@ -30,6 +31,7 @@ mongoose.connection.on('error', err => console.log('🟥 error', err));
  */
 app.use('/health', healthRoutes)
 app.use('/api/v1/auth', authRoutes)
+app.use('/api/v1/provider', providerRoutes)
 
 
 /**

@@ -25,7 +25,52 @@ const UserSchema = new mongoose.Schema({
         type: String,
         enum: ["PROVIDER", "CLIENT"],
         required: [true, "Empty UserType"]
-    }
+    },
+    availability: {
+        startDate: {
+            type: String,
+            require: false
+        },
+        endDate: {
+            type: String,
+            require: false
+        },
+        startTime: {
+            type: String,
+            require: false
+        },
+        endTime: {
+            type: String,
+            require: false
+        },
+    },
+    services: [
+        {
+            category: {
+                type: String,
+                enum: [
+                    "HOME_SERVICES",
+                    "TECHNOLOGY_AND_ELECTRONICS",
+                    "BEAUTY_AND_GROOMING",
+                    "EDUCATIONAL_SERVICES",
+                    "MISCELLANEOUS_SERVICES",
+                ],
+                require: false
+            },
+            title: {
+                type: String,
+                require: false
+            },
+            desc: {
+                type: String,
+                require: false
+            },
+            price: {
+                type: String,
+                require: false
+            },
+        }
+    ]
 },
 {
     timestamps: true
