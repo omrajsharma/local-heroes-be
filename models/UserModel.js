@@ -61,12 +61,12 @@ const UserSchema = new mongoose.Schema({
                 type: String,
                 require: false
             },
-            desc: {
+            description: {
                 type: String,
                 require: false
             },
             price: {
-                type: String,
+                type: Number,
                 require: false
             },
         }

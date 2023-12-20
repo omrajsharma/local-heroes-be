@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const {updateProviderAvailability, addProviderService} = require('../controllers/ProviderController')
+const {authenticateToken, updateProviderAvailability, addProviderService} = require('../controllers/ProviderController')
 
 router.put('/availability', updateProviderAvailability); 
-router.post('/service', addProviderService); 
+router.post('/service', authenticateToken, addProviderService);
 
 module.exports = router;
