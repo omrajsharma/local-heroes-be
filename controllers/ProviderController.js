@@ -23,7 +23,61 @@ const authenticateToken = async (req, res, next) => {
   }
 };
 
-const updateProviderAvailability = (req, res) => {};
+const updateProviderAvailability = async (req, res) => {
+  const {daysType, startDate, endDate, startTime, endTime} = req.body ;
+
+  let startDateObj = null;
+  let endDateObj = null;
+
+  if (daysType == "DATE_RANGE") {
+    if (startDate.length == 0) {
+      res.status(400).json({ error: "Invalid start date" });
+      return;
+    }
+    if (endDate.length == 0) {
+      res.status(400).json({ error: "Title should be less than 100 characters" });
+      return;
+    }
+    startDateObj = new Date(startDate)
+    endDateObj = new Date(endDate)
+    if (startDateObj >= endDateObj) {
+      res.status(400).json({ error: "Invalid Request: start date should be less than end date" });
+      return;
+    }
+  } else if (daysType == "ALL_DAYS") {
+  } else {
+    res.status(400).json({ error: "Invalid day type" });
+    return;
+  }
+
+  if (startTime.length == 0) {
+    res.status(400).json({ error: "Invalid start time" });
+    return;
+  }
+  if (endTime.length == 0) {
+    res.status(400).json({ error: "Invalid end time" });
+    return;
+  }
+  if (startTime > endTime) {
+    res.status(400).json({ error: "Invalid Request: start time should be less than end time" });
+    return;
+  }
+
+  try {
+    const userDoc = await UserModel.findOne({_id: req.user._id});
+    userDoc.availability.daysType = daysType
+    userDoc.availability.startDate = (daysType == "ALL_DAYS" ? null : startDate)
+    userDoc.availability.endDate = (daysType == "ALL_DAYS" ? null : endDate)
+    userDoc.availability.startTime = startTime
+    userDoc.availability.endTime = endTime
+    userDoc.save();
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ error: "Something went wrong!!!"});
+    return;
+  }
+  res.status(200).json({message: "User availability updated"});
+};
 
 const addProviderService = async (req, res) => {
   const { description, price, serviceType, title } = req.body;

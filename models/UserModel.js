@@ -27,21 +27,25 @@ const UserSchema = new mongoose.Schema({
         required: [true, "Empty UserType"]
     },
     availability: {
+        daysType: {
+            type: String,
+            required: false
+        },
         startDate: {
             type: String,
-            require: false
+            required: false
         },
         endDate: {
             type: String,
-            require: false
+            required: false
         },
         startTime: {
             type: String,
-            require: false
+            required: false
         },
         endTime: {
             type: String,
-            require: false
+            required: false
         },
     },
     services: [
@@ -55,19 +59,19 @@ const UserSchema = new mongoose.Schema({
                     "EDUCATIONAL_SERVICES",
                     "MISCELLANEOUS_SERVICES",
                 ],
-                require: false
+                required: false
             },
             title: {
                 type: String,
-                require: false
+                required: false
             },
-            description: {
+            descriptiond: {
                 type: String,
                 require: false
             },
             price: {
                 type: Number,
-                require: false
+                required: false
             },
         }
     ]
