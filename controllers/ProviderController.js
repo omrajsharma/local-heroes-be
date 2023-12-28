@@ -111,10 +111,10 @@ const addProviderService = async (req, res) => {
     }
     userDoc.services.push(newService)
     userDoc.save();
+    res.status(200).json({message: "Service added successfully"})
   } catch (err) {
     res.status(400).json({ error: "Something went wrong!!!" });
   }
-  res.end();
 };
 
 // assignment - get provider service
