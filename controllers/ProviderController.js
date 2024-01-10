@@ -35,7 +35,7 @@ const updateProviderAvailability = async (req, res) => {
       return;
     }
     if (!endDate || endDate.length == 0) {
-      res.status(400).json({ error: "Title should be less than 100 characters" });
+      res.status(400).json({ error: "Invalid end date" });
       return;
     }
     startDateObj = new Date(startDate)
@@ -50,11 +50,11 @@ const updateProviderAvailability = async (req, res) => {
     return;
   }
 
-  if (startTime.length == 0) {
+  if (startTime.length == 0 || startTime == 'Invalid Date') {
     res.status(400).json({ error: "Invalid start time" });
     return;
   }
-  if (endTime.length == 0) {
+  if (endTime.length == 0 || endTime == 'Invalid Date') {
     res.status(400).json({ error: "Invalid end time" });
     return;
   }
