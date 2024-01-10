@@ -30,11 +30,11 @@ const updateProviderAvailability = async (req, res) => {
   let endDateObj = null;
 
   if (daysType == "DATE_RANGE") {
-    if (startDate.length == 0) {
+    if (!startDate || startDate.length == 0) {
       res.status(400).json({ error: "Invalid start date" });
       return;
     }
-    if (endDate.length == 0) {
+    if (!endDate || endDate.length == 0) {
       res.status(400).json({ error: "Title should be less than 100 characters" });
       return;
     }
