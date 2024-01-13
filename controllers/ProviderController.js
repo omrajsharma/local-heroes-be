@@ -1,4 +1,5 @@
 const UserModel = require('../models/UserModel');
+const BookingModel = require('../models/BookingModel');
 const jwt = require('jsonwebtoken');
 
 const authenticateToken = async (req, res, next) => {
@@ -22,6 +23,37 @@ const authenticateToken = async (req, res, next) => {
     return res.status(401).json({ error: "Invalid token." });
   }
 };
+
+const getProviderRequests = async (req, res) => {
+  const {status} = req.query
+
+  try {
+    const bookings = await BookingModel.find({
+      providerId: req.user._id,
+      status: status
+    })
+    res.status(400).json({ data: bookings});
+  } catch (e) {
+    console.log(err);
+    res.status(400).json({ error: "Something went wrong!!!"});
+    return;
+  }
+}
+
+const updateProviderRequest = async (req, res) => {
+  const {bookingId, status} = req.body;
+
+  try {
+    const bookingDoc = await BookingModel.findById(bookingId)
+    bookingDoc.status = status
+    const updatedBooking = await bookingDoc.save();
+    res.status(200).json({ data: updatedBooking});
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ error: "Something went wrong!!!"});
+    return;
+  }
+}
 
 const updateProviderAvailability = async (req, res) => {
   const {daysType, startDate, endDate, startTime, endTime} = req.body ;
@@ -120,4 +152,4 @@ const addProviderService = async (req, res) => {
 // assignment - get provider service
 // assignment - get provider availability
 
-module.exports = {authenticateToken, updateProviderAvailability, addProviderService };
+module.exports = {authenticateToken, updateProviderAvailability, addProviderService, getProviderRequests, updateProviderRequest };
