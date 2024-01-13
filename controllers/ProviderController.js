@@ -31,10 +31,19 @@ const getProviderRequests = async (req, res) => {
     const bookings = await BookingModel.find({
       providerId: req.user._id,
       status: status
+    }).populate('clientId', ['name', 'phone'])
+
+    const bookingsWithServiceDetail = bookings.map(booking => {
+      const service = req.user.services.find(service => service._id.toString() === booking.providerServiceId.toString());
+      return {
+        ...booking.toObject(),
+        serviceName: service.title,
+        servicePrice: service.price
+      }
     })
-    res.status(400).json({ data: bookings});
+    res.status(200).json({ data: bookingsWithServiceDetail});
   } catch (e) {
-    console.log(err);
+    console.log(e);
     res.status(400).json({ error: "Something went wrong!!!"});
     return;
   }

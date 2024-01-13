@@ -3,17 +3,17 @@ const mongoose = require('mongoose')
 const BookingSchema = new mongoose.Schema({
     providerId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "UserModel",
+        ref: "users",
         required: true
     },
     providerServiceId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "UserModel",
+        ref: "users",
         required: true
     },
     clientId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "UserModel",
+        ref: "users",
         required: true
     },
     status: {
