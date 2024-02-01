@@ -16,7 +16,7 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
     credentials: true,
-    origin: ['http://localhost:5173']
+    origin: ['https://local-heroes-backend-unw8.onrender.com', 'http://localhost:5173']
 }));
 
 /**
