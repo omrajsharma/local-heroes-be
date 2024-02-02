@@ -16,7 +16,7 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
     credentials: true,
-    origin: ['https://local-heroes-fe-theta.vercel.app/', 'http://localhost:5173']
+    origin: ['https://local-heroes-fe-theta.vercel.app', 'http://localhost:5173']
 }));
 
 /**
