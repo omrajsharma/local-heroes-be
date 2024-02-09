@@ -115,7 +115,7 @@ const loginUser = async (req, res) => {
             return;
         }
         
-        const token = jwt.sign({id : userDoc._id}, process.env.JWT_SECRET_KEY, {expiresIn: '1h'});
+        const token = jwt.sign({id : userDoc._id}, process.env.JWT_SECRET_KEY, {expiresIn: '1d'});
         
         res.cookie('token', token, {httpOnly: true, sameSite: 'none', secure: true})
             .status(200)
@@ -163,7 +163,11 @@ const getProfile = async (req, res) => {
 }
 
 const logoutUser = async (req, res) => {
-    res.clearCookie('token').status(200).json({success: "User Logout"});
+    res.clearCookie('token', {
+        httpOnly: true,
+        sameSite: 'none',
+        secure: true
+    }).status(200).json({success: "User Logout"});
 }
 
 module.exports = { registerUser, loginUser, getProfile, logoutUser };
